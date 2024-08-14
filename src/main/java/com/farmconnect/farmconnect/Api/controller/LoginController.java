@@ -65,6 +65,15 @@ public class LoginController {
         }
     }
 
+    @PostMapping("/getuserphone")
+    public ResponseEntity<Object> getuserphone(@RequestParam long phone, @RequestParam String password) {
+        Optional<LoginM> userdata = loginrepo.finduserbyphone(phone, password);
+        if (userdata.isPresent()) {
+            return generateResponse("User found", HttpStatus.OK, userdata.get());
+        } else {
+            return generateResponse("User not found or incorrect credentials", HttpStatus.NOT_FOUND, null);
+        }
+    }
 
     private ResponseEntity<Object> generateResponse(String message, HttpStatus status, Object responseObj) {
         Map<String, Object> map = new HashMap<>();
