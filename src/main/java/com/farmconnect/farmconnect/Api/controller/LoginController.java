@@ -28,13 +28,13 @@ public class LoginController {
     @PostMapping("/insertdata")
     public ResponseEntity<Object> insertdata(@RequestBody LoginM data) {
         LoginM savedEmp = loginrepo.save(data);
-        return generateResponse("Employee saved successfully", HttpStatus.OK, savedEmp);
+        return generateResponse("200", HttpStatus.OK, savedEmp);
     }
 
     @GetMapping("/getAlldata")
     public ResponseEntity<Object> getAlldata() {
         List<LoginM> userdata = loginrepo.findAll();
-        return generateResponse("All employees fetched successfully", HttpStatus.OK, userdata);
+        return generateResponse("200", HttpStatus.OK, userdata);
     }
 
     @PostMapping("/updatedata")
@@ -48,9 +48,9 @@ public class LoginController {
             existinguser.setPincode(data.getPincode());
             existinguser.setPassword(data.getPassword());
             LoginM updateduser = loginrepo.save(existinguser);
-            return generateResponse("Employee updated successfully", HttpStatus.OK, updateduser);
+            return generateResponse("200", HttpStatus.OK, updateduser);
         } else {
-            return generateResponse("Employee not found", HttpStatus.NOT_FOUND, null);
+            return generateResponse("500", HttpStatus.NOT_FOUND, null);
         }
     }
 
@@ -59,9 +59,9 @@ public class LoginController {
         Optional<LoginM> optionaluser = loginrepo.findById(data.getId());
         if (optionaluser.isPresent()) {
             loginrepo.deleteById(data.getId());
-            return generateResponse("Employee deleted successfully", HttpStatus.OK, data);
+            return generateResponse("200", HttpStatus.OK, data);
         } else {
-            return generateResponse("Employee not found", HttpStatus.NOT_FOUND, null);
+            return generateResponse("500", HttpStatus.NOT_FOUND, null);
         }
     }
 
@@ -69,9 +69,9 @@ public class LoginController {
     public ResponseEntity<Object> getuserphone(@RequestParam long phone, @RequestParam String password) {
         Optional<LoginM> userdata = loginrepo.finduserbyphone(phone, password);
         if (userdata.isPresent()) {
-            return generateResponse("User found", HttpStatus.OK, userdata.get());
+            return generateResponse("200", HttpStatus.OK, userdata.get());
         } else {
-            return generateResponse("User not found or incorrect credentials", HttpStatus.NOT_FOUND, null);
+            return generateResponse("500", HttpStatus.NOT_FOUND, null);
         }
     }
 
