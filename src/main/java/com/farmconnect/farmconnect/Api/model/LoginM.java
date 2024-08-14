@@ -1,4 +1,4 @@
-package com.farmconnect.model;
+package com.farmconnect.farmconnect.Api.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "login")
-public class Login { // Corrected to PascalCase
+public class LoginM {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,9 +18,16 @@ public class Login { // Corrected to PascalCase
     @Column(name = "name")
     private String name;
 
+    @Column(name = "phone")
     private long phone;
+
+    @Column(name = "address")
     private String address;
+
+    @Column(name = "pincode")
     private int pincode;
+
+    @Column(name = "password")
     private String password;
 
     // Getters and Setters
