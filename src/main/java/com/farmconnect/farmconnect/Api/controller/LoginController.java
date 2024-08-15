@@ -68,8 +68,8 @@ public class LoginController {
     }
 
     @PostMapping(value = "/getuserphone")
-    public ResponseEntity<Object> getuserphone(@RequestParam long phone, @RequestParam String password) {
-        Optional<LoginM> userdata = loginrepo.finduserbyphone(phone, password);
+    public ResponseEntity<Object> getuserphone(@RequestBody LoginM data) {
+        Optional<LoginM> userdata = loginrepo.finduserbyphone(data.getPhone(), data.getPassword());
         if (userdata.isPresent()) {
             return generateResponse("200", HttpStatus.OK, userdata.get());
         } else {
