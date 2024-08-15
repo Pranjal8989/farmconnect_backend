@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,24 +21,25 @@ import com.farmconnect.farmconnect.Api.repo.Loginrepo;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*", allowedHeaders = "*")  // Enable CORS
 public class LoginController {
 
     @Autowired
     private Loginrepo loginrepo;
 
-    @PostMapping("/insertdata")
+    @PostMapping(value = "/insertdata")
     public ResponseEntity<Object> insertdata(@RequestBody LoginM data) {
         LoginM savedEmp = loginrepo.save(data);
         return generateResponse("200", HttpStatus.OK, savedEmp);
     }
 
-    @GetMapping("/getAlldata")
+    @GetMapping(value = "/getAlldata")
     public ResponseEntity<Object> getAlldata() {
         List<LoginM> userdata = loginrepo.findAll();
         return generateResponse("200", HttpStatus.OK, userdata);
     }
 
-    @PostMapping("/updatedata")
+    @PostMapping(value = "/updatedata")
     public ResponseEntity<Object> updatedata(@RequestBody LoginM data) {
         Optional<LoginM> optionaluser = loginrepo.findById(data.getId());
         if (optionaluser.isPresent()) {
@@ -54,7 +56,7 @@ public class LoginController {
         }
     }
 
-    @PostMapping("/deletedata")
+    @PostMapping(value = "/deletedata")
     public ResponseEntity<Object> deleteuserById(@RequestBody LoginM data) {
         Optional<LoginM> optionaluser = loginrepo.findById(data.getId());
         if (optionaluser.isPresent()) {
@@ -65,7 +67,7 @@ public class LoginController {
         }
     }
 
-    @PostMapping("/getuserphone")
+    @PostMapping(value = "/getuserphone")
     public ResponseEntity<Object> getuserphone(@RequestParam long phone, @RequestParam String password) {
         Optional<LoginM> userdata = loginrepo.finduserbyphone(phone, password);
         if (userdata.isPresent()) {
