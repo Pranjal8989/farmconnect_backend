@@ -12,4 +12,5 @@ public interface Loginrepo extends JpaRepository<LoginM, Integer> {
     // Custom query methods can be added here if needed
       @Query("SELECT login FROM LoginM login WHERE login.phone = :phone AND login.password = :password")
     Optional<LoginM> finduserbyphone(@Param("phone") long phone, @Param("password") String password);
+
 }

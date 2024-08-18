@@ -38,6 +38,16 @@ public class LoginController {
         List<LoginM> userdata = loginrepo.findAll();
         return generateResponse("200", HttpStatus.OK, userdata);
     }
+    @GetMapping(value = "/getdatabyId")
+    public ResponseEntity<Object> getMethodName(@RequestParam int id) {
+        Optional<LoginM> userbyId = loginrepo.findById(id);
+        if (userbyId.isPresent()) {
+            return generateResponse("200", HttpStatus.OK, userbyId.get());
+        } else {
+            return generateResponse("500", HttpStatus.NOT_FOUND, null);
+        }
+    }
+    
 
     @PostMapping(value = "/updatedata")
     public ResponseEntity<Object> updatedata(@RequestBody LoginM data) {
